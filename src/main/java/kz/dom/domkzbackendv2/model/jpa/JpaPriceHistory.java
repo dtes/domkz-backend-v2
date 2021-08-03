@@ -3,16 +3,19 @@ package kz.dom.domkzbackendv2.model.jpa;
 import kz.dom.domkzbackendv2.model.jpa.base.JpaBaseModel;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Table(name ="price_his")
 @Entity
-public class JpaPriceHistory extends JpaBaseModel {
+public class JpaPriceHistory {
+    @Id
+    @SequenceGenerator(name = "price-his-seq-gen", sequenceName = "price_his_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "price-his-seq-gen", strategy = GenerationType.SEQUENCE)
+    private long id;
     @Column(name ="price")
     private Double price;
     @Column(name = "housing_id")
+    @JoinColumn(name = "housing_id")
     private Long housingId;
 }

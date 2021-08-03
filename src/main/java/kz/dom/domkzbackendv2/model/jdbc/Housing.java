@@ -1,11 +1,14 @@
 package kz.dom.domkzbackendv2.model.jdbc;
 
+import kz.dom.domkzbackendv2.model.PriceHistory;
 import kz.dom.domkzbackendv2.model.jdbc.base.BaseModel;
 import lombok.Data;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Table("housings")
@@ -15,34 +18,34 @@ public class Housing extends BaseModel {
     private Long resComplexesBlocksId;
     private Long layoutId;
     private Boolean redeveloped;
-    @Column("ceilingheight")
+    @Column("ceilingHeight")
     private Double ceilingHeight;
-    @Column("dtcreate")
+    @Column("dtCreate")
     private Date dtCreate;
-    @Column("dtmoderate")
+    @Column("dtModerate")
     private Date dtModerate;
-    @Column("dtclose")
+    @Column("dtClose")
     private Date dtClose;
-    @Column("dtmodify")
+    @Column("dtModify")
     private Date dtModify;
-    @Column("supplysource")
+    @Column("supplySource")
     private Long supplySource;
     private String email;
-    @Column("contactname")
+    @Column("contactName")
     private String contactName;
-    @Column("roomcount")
+    @Column("roomCount")
     private Integer roomCount;
-    @Column("floorcount")
+    @Column("floorCount")
     private Integer floorCount;
-    @Column("bedroomcount")
+    @Column("bedroomCount")
     private Integer bedroomCount;
-    @Column("coordx")
+    @Column("coordX")
     private String coordX;
-    @Column("coordy")
+    @Column("coordY")
     private String coordY;
     private String geohash;
     private String num;
-    @Column("housenum")
+    @Column("houseNum")
     private String houseNum;
     private String entryNumber;
     private Double totalPrice;
@@ -53,7 +56,7 @@ public class Housing extends BaseModel {
     private Long cityId;
     private Long propertyClassId;
     private Long furnishedId;
-    @Column("floornum")
+    @Column("floorNum")
     private Integer floorNum;
     private Long finishingId;
     private Long districtId;
@@ -72,13 +75,16 @@ public class Housing extends BaseModel {
     private Long toiletTypeId;
     private Long heatingTypeId;
     private Double pricePerSquareMeter;
-    @Column("isstudio")
+    @Column("isStudio")
     private Boolean isStudio;
     private Double area;
-    @Column("arealive")
+    @Column("areaLive")
     private Double areaLive;
-    @Column("areakitchen")
+    @Column("areaKitchen")
     private Double areaKitchen;
-    @Column("arealand")
+    @Column("areaLand")
     private Double areaLand;
+
+    @MappedCollection(idColumn = "housing_id", keyColumn = "id")
+    List<PriceHistory> priceHistories;
 }

@@ -10,7 +10,9 @@ import kz.dom.domkzbackendv2.model.jdbc.dict.location.District;
 import kz.dom.domkzbackendv2.repository.jdbc.HousingRepository;
 import kz.dom.domkzbackendv2.repository.jdbc.HousingSearchRepository;
 import kz.dom.domkzbackendv2.repository.jdbc.dict.housing.HousingTypeRepository;
-import kz.dom.domkzbackendv2.repository.jdbc.dict.location.*;
+import kz.dom.domkzbackendv2.repository.jdbc.dict.location.AddressRepository;
+import kz.dom.domkzbackendv2.repository.jdbc.dict.location.CityRepository;
+import kz.dom.domkzbackendv2.repository.jdbc.dict.location.DistrictRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,18 +51,21 @@ public class JdbcRepositoryTests {
         page.forEach(Printer::println);
 
         println("\n=== findById ===");
-        Optional<Housing> housing = housingRepository.findById(245468L);
+        Optional<Housing> housing = housingRepository.findById(267482L);
         println(housing);
+        println(" priceHistory: " + housing.get().getPriceHistories());
 
         println("\n=== count ===");
         long count = housingRepository.count();
         println("count: " + count);
 
         println("\n=== search ===");
-        HousingSearchFilterDTO filter = HousingSearchFilterDTO.builder().housingTypeId(2).pageNum(1).pageSize(15).build();
+        HousingSearchFilterDTO filter = HousingSearchFilterDTO.builder().housingTypeId(2L).pageNum(1).pageSize(15).build();
         HousingSearchResultDTO result = housingSearchRepository.search(filter);
         result.getData().forEach(item -> println(item));
     }
+
+    // TODO: Сделать сохранение с @MappedCollection
 
     @Test
     public void housingTypes() {
@@ -108,7 +113,6 @@ public class JdbcRepositoryTests {
         page = districtRepository.findAllByCityId(2L, pageRequest);
         page.forEach(Printer::println);
     }
-
 
 
 }

@@ -11,7 +11,10 @@ import java.util.List;
 @Data
 @Table(name = "housings")
 @Entity
-public class JpaHousing extends JpaBaseModel {
+public class JpaHousing {
+    @Id
+    @SequenceGenerator(name = "housings-seq-gen", sequenceName = "housings_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "housings-seq-gen", strategy = GenerationType.SEQUENCE)
     private long id;
     @Column(name = "rbd_id")
     private Long rbdId;
@@ -114,7 +117,7 @@ public class JpaHousing extends JpaBaseModel {
     private Double areaLand;
 
     // references
-    @OneToMany(mappedBy = "housingId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "housingId", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     @BatchSize(size = 10)
     private List<JpaPriceHistory> priceHistories;
 }

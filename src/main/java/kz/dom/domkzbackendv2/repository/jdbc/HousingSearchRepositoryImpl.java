@@ -17,12 +17,12 @@ public class HousingSearchRepositoryImpl implements HousingSearchRepository {
 
     @Override
     public HousingSearchResultDTO search(HousingSearchFilterDTO filter) {
-        Map params = new HashMap();
+        Map<String, Object> params = new HashMap();
         params.put("housingType", filter.getHousingTypeId());
-        params.put("offset", filter.getPageNum());
+        params.put("offset", (filter.getPageNum() - 1) * filter.getPageSize());
         params.put("limit", filter.getPageSize());
 
-        String query = "select h.id, h.housing_type_id from housings h \n" +
+        String query = "select * from housings h \n" +
                 "where housing_type_id=:housingType \n" +
                 "limit :limit offset :offset";
 
