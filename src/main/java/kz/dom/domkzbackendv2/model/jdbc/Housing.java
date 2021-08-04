@@ -1,6 +1,5 @@
 package kz.dom.domkzbackendv2.model.jdbc;
 
-import kz.dom.domkzbackendv2.model.PriceHistory;
 import kz.dom.domkzbackendv2.model.jdbc.base.BaseModel;
 import lombok.Data;
 import org.springframework.data.relational.core.mapping.Column;

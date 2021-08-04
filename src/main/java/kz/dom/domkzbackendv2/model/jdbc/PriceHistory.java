@@ -1,4 +1,4 @@
-package kz.dom.domkzbackendv2.model;
+package kz.dom.domkzbackendv2.model.jdbc;
 
 import kz.dom.domkzbackendv2.model.jdbc.base.BaseModel;
 import lombok.Data;

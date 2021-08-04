@@ -2,8 +2,8 @@ package kz.dom.domkzbackendv2;
 
 import kz.dom.domkzbackendv2.dto.HousingSearchFilterDTO;
 import kz.dom.domkzbackendv2.dto.HousingSearchResultDTO;
-import kz.dom.domkzbackendv2.model.PriceHistory;
 import kz.dom.domkzbackendv2.model.jdbc.Housing;
+import kz.dom.domkzbackendv2.model.jdbc.PriceHistory;
 import kz.dom.domkzbackendv2.model.jdbc.dict.housing.HousingType;
 import kz.dom.domkzbackendv2.model.jdbc.dict.location.Address;
 import kz.dom.domkzbackendv2.model.jdbc.dict.location.City;
@@ -54,6 +54,10 @@ public class JdbcRepositoryTests {
         println("page: " + page.getPageable().getPageNumber() + ", size: " + page.getSize());
         page.forEach(Printer::println);
 
+        println("\n=== findAllById ===");
+        Iterable<Housing> housings = housingRepository.findAllById(Arrays.asList(267482L, 269490L));
+        housings.forEach(Printer::println);
+
         println("\n=== findById ===");
         Optional<Housing> housing = housingRepository.findById(267482L);
         println(housing);
@@ -66,10 +70,11 @@ public class JdbcRepositoryTests {
         println("\n=== search ===");
         HousingSearchFilterDTO filter = HousingSearchFilterDTO.builder().housingTypeId(2L).pageNum(1).pageSize(15).build();
         HousingSearchResultDTO result = housingSearchRepository.search(filter);
-        result.getData().forEach(item -> println(item.getId() + ". " +item));
+        result.getData().forEach(item -> println(item.getId() + ". " + item));
     }
 
     @Test
+    @Transactional
     @Commit
     public void housingSave() {
         PriceHistory ph1 = new PriceHistory();
@@ -101,8 +106,11 @@ public class JdbcRepositoryTests {
     @Test
     @Commit
     public void housingUpdate() {
-        housingRepository.findById(269547L).ifPresent(housing -> {
-            housing.getPriceHistories().get(0).setPrice(265_000d);
+        housingRepository.findById(267482L).ifPresent(housing -> {
+            // change only root
+            housing.setCeilingHeight(2.7);
+            // change children
+            //housing.getPriceHistories().get(0).setPrice(265_000d);
             housingRepository.save(housing);
         });
     }

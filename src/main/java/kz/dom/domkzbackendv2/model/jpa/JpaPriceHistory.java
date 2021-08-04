@@ -16,6 +16,5 @@ public class JpaPriceHistory {
     @Column(name ="price")
     private Double price;
     @Column(name = "housing_id")
-    @JoinColumn(name = "housing_id")
     private Long housingId;
 }

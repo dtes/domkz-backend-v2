@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static kz.dom.domkzbackendv2.Printer.println;
 
@@ -69,6 +66,17 @@ public class JpaRepositoryTests {
 
         JpaHousing savedJpaHousing = jpaHousingRepository.save(newHousing);
         println(savedJpaHousing);
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    public void housingUpdate() {
+        Optional<JpaHousing> housing = jpaHousingRepository.findById(269518L);
+        housing.ifPresent(h -> {
+            h.setCeilingHeight(2.8);
+            jpaHousingRepository.save(h);
+        });
     }
 
     @Test
