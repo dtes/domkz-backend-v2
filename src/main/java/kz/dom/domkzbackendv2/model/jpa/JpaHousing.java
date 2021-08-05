@@ -1,6 +1,7 @@
 package kz.dom.domkzbackendv2.model.jpa;
 
 import kz.dom.domkzbackendv2.model.jpa.base.JpaBaseModel;
+import kz.dom.domkzbackendv2.model.jpa.dict.housing.JpaElectricityType;
 import lombok.Data;
 import org.hibernate.annotations.BatchSize;
 
@@ -98,8 +99,11 @@ public class JpaHousing {
     private Long windowTypeId;
     @Column(name = "wall_id")
     private Long wallId;
-    @Column(name = "electricity_type_id")
-    private Long electricityTypeId;
+//    @Column(name = "electricity_type_id")
+//    private Long electricityTypeId;
+    @ManyToOne
+    @JoinColumn(name = "electricity_type_id")
+    private JpaElectricityType electricityType;
     @Column(name = "toilet_type_id")
     private Long toiletTypeId;
     @Column(name = "heating_type_id")

@@ -4,8 +4,10 @@ import kz.dom.domkzbackendv2.dto.HousingSearchFilterDTO;
 import kz.dom.domkzbackendv2.dto.HousingSearchResultDTO;
 import kz.dom.domkzbackendv2.model.jpa.JpaHousing;
 import kz.dom.domkzbackendv2.model.jpa.JpaPriceHistory;
+import kz.dom.domkzbackendv2.model.jpa.dict.housing.JpaElectricityType;
 import kz.dom.domkzbackendv2.repository.jpa.JpaHousingRepository;
 import kz.dom.domkzbackendv2.repository.jpa.JpaHousingSearchRepository;
+import kz.dom.domkzbackendv2.service.JpaHousingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +28,8 @@ public class JpaRepositoryTests {
     JpaHousingRepository jpaHousingRepository;
     @Autowired
     JpaHousingSearchRepository jpaHousingSearchRepository;
+    @Autowired
+    JpaHousingService jpaHousingService;
 
     private final Pageable pageRequest = PageRequest.of(0, 10);
 
@@ -35,6 +39,10 @@ public class JpaRepositoryTests {
         println("=== findAll ===");
         Page<JpaHousing> page = jpaHousingRepository.findAll(pageRequest);
         page.forEach(jpaHousing -> println(jpaHousing));
+
+        println("\n=== findAllById ===");
+        Iterable<JpaHousing> housings = jpaHousingRepository.findAllById(Arrays.asList(267482L, 245477L, 260840L));
+        housings.forEach(Printer::println);
     }
 
     @Test
@@ -42,10 +50,14 @@ public class JpaRepositoryTests {
     @Commit
     public void housingSave() {
         println("=== save ===");
+
         JpaPriceHistory priceHistory1 = new JpaPriceHistory();
         priceHistory1.setPrice(260_000D);
         JpaPriceHistory priceHistory2 = new JpaPriceHistory();
         priceHistory2.setPrice(270_000D);
+
+        JpaElectricityType electricityType = new JpaElectricityType();
+        electricityType.setId(2);
 
         JpaHousing newHousing = new JpaHousing();
         newHousing.setRbdId(123001L);
@@ -62,6 +74,7 @@ public class JpaRepositoryTests {
         newHousing.setSell(true);
         newHousing.setCorner(false);
         newHousing.setPricePerSquareMeter(260_000D);
+        newHousing.setElectricityType(electricityType);
         newHousing.setPriceHistories(Arrays.asList(priceHistory1, priceHistory2));
 
         JpaHousing savedJpaHousing = jpaHousingRepository.save(newHousing);
@@ -69,14 +82,22 @@ public class JpaRepositoryTests {
     }
 
     @Test
-    @Transactional
+//    @Transactional
     @Commit
     public void housingUpdate() {
-        Optional<JpaHousing> housing = jpaHousingRepository.findById(269518L);
-        housing.ifPresent(h -> {
-            h.setCeilingHeight(2.8);
-            jpaHousingRepository.save(h);
-        });
+        JpaHousing housing = jpaHousingService.findById(239379L);
+//            housing.setCeilingHeight(2.8);
+        JpaPriceHistory ph1 = new JpaPriceHistory();
+        ph1.setId(13);
+        ph1.setPrice(271000.00);
+        ph1.setHousingId(239379L);
+        JpaPriceHistory ph2 = new JpaPriceHistory();
+        ph2.setId(12);
+        ph2.setPrice(272000.00);
+        ph2.setHousingId(239379L);
+
+        housing.setPriceHistories(Arrays.asList(ph1, ph2));
+        jpaHousingService.save(housing);
     }
 
     @Test
