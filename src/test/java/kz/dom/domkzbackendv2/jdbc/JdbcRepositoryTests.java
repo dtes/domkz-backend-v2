@@ -1,5 +1,6 @@
-package kz.dom.domkzbackendv2;
+package kz.dom.domkzbackendv2.jdbc;
 
+import kz.dom.domkzbackendv2.Printer;
 import kz.dom.domkzbackendv2.dto.HousingSearchFilterDTO;
 import kz.dom.domkzbackendv2.dto.HousingSearchResultDTO;
 import kz.dom.domkzbackendv2.model.jdbc.Housing;

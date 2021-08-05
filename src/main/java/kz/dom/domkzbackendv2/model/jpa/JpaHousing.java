@@ -6,6 +6,7 @@ import lombok.Data;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -121,7 +122,19 @@ public class JpaHousing {
     private Double areaLand;
 
     // references
-    @OneToMany(mappedBy = "housingId", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "housing", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     @BatchSize(size = 10)
     private List<JpaPriceHistory> priceHistories;
+
+    public void addPriceHistory(JpaPriceHistory priceHistory) {
+        priceHistory.setHousing(this);
+        getPriceHistories().add(priceHistory);
+    }
+
+    public List<JpaPriceHistory> getPriceHistories() {
+        if (priceHistories == null) {
+            priceHistories = new ArrayList<>();
+        }
+        return priceHistories;
+    }
 }

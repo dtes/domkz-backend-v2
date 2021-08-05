@@ -2,10 +2,14 @@ package kz.dom.domkzbackendv2.model.jpa;
 
 import kz.dom.domkzbackendv2.model.jpa.base.JpaBaseModel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Data
+@ToString(exclude = "housing")
 @Table(name ="price_his")
 @Entity
 public class JpaPriceHistory {
@@ -15,6 +19,9 @@ public class JpaPriceHistory {
     private long id;
     @Column(name ="price")
     private Double price;
-    @Column(name = "housing_id")
-    private Long housingId;
+//    @Column(name = "housing_id")
+//    private Long housingId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="housing_id")
+    private JpaHousing housing;
 }

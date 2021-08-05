@@ -1,5 +1,6 @@
-package kz.dom.domkzbackendv2;
+package kz.dom.domkzbackendv2.jpa;
 
+import kz.dom.domkzbackendv2.Printer;
 import kz.dom.domkzbackendv2.dto.HousingSearchFilterDTO;
 import kz.dom.domkzbackendv2.dto.HousingSearchResultDTO;
 import kz.dom.domkzbackendv2.model.jpa.JpaHousing;
@@ -28,8 +29,6 @@ public class JpaRepositoryTests {
     JpaHousingRepository jpaHousingRepository;
     @Autowired
     JpaHousingSearchRepository jpaHousingSearchRepository;
-    @Autowired
-    JpaHousingService jpaHousingService;
 
     private final Pageable pageRequest = PageRequest.of(0, 10);
 
@@ -75,29 +74,26 @@ public class JpaRepositoryTests {
         newHousing.setCorner(false);
         newHousing.setPricePerSquareMeter(260_000D);
         newHousing.setElectricityType(electricityType);
-        newHousing.setPriceHistories(Arrays.asList(priceHistory1, priceHistory2));
+        newHousing.addPriceHistory(priceHistory1);
+        newHousing.addPriceHistory(priceHistory2);
 
         JpaHousing savedJpaHousing = jpaHousingRepository.save(newHousing);
+
         println(savedJpaHousing);
     }
 
     @Test
-//    @Transactional
+    @Transactional
     @Commit
     public void housingUpdate() {
-        JpaHousing housing = jpaHousingService.findById(239379L);
-//            housing.setCeilingHeight(2.8);
+        JpaHousing housing = jpaHousingRepository.findById(239379L).get();
         JpaPriceHistory ph1 = new JpaPriceHistory();
-        ph1.setId(13);
         ph1.setPrice(271000.00);
-        ph1.setHousingId(239379L);
         JpaPriceHistory ph2 = new JpaPriceHistory();
-        ph2.setId(12);
         ph2.setPrice(272000.00);
-        ph2.setHousingId(239379L);
 
         housing.setPriceHistories(Arrays.asList(ph1, ph2));
-        jpaHousingService.save(housing);
+        jpaHousingRepository.save(housing);
     }
 
     @Test
