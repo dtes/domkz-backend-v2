@@ -1,13 +1,16 @@
 package kz.dom.domkzbackendv2.model.jpa.dict.housing;
 
 
-import kz.dom.domkzbackendv2.model.jpa.base.JpaMultiLangJpaNamedModelJpa;
+import kz.dom.domkzbackendv2.model.jpa.base.JpaMultiLangNamedModel;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.relational.core.mapping.Table;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
 @ToString(callSuper = true)
-@Table("heating_types")
-public class JpaHeatingType extends JpaMultiLangJpaNamedModelJpa {
+@Table(name = "heating_types")
+@Entity
+public class JpaHeatingType extends JpaMultiLangNamedModel {
 }

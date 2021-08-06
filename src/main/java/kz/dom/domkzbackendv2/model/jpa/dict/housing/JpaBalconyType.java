@@ -1,7 +1,7 @@
 package kz.dom.domkzbackendv2.model.jpa.dict.housing;
 
 
-import kz.dom.domkzbackendv2.model.jpa.base.JpaMultiLangJpaNamedModelJpa;
+import kz.dom.domkzbackendv2.model.jpa.base.JpaMultiLangNamedModel;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,5 +12,5 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 @Table(name = "balcony_types")
 @Entity()
-public class JpaBalconyType extends JpaMultiLangJpaNamedModelJpa {
+public class JpaBalconyType extends JpaMultiLangNamedModel {
 }

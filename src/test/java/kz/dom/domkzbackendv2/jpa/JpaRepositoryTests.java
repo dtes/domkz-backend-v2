@@ -97,9 +97,11 @@ public class JpaRepositoryTests {
     }
 
     @Test
+    @Transactional
     public void housingSearch() {
         println("=== search ===");
-        HousingSearchFilterDTO filter = HousingSearchFilterDTO.builder().pageNum(1).pageSize(15).build();
+        HousingSearchFilterDTO filter = HousingSearchFilterDTO.builder()
+                .housingTypeId(1L).pageNum(1).pageSize(15).build();
         HousingSearchResultDTO result = jpaHousingSearchRepository.search(filter);
         result.getJpaData().forEach(item -> {
             println(item);

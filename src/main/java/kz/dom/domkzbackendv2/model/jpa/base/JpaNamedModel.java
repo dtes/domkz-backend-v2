@@ -8,6 +8,6 @@ import javax.persistence.MappedSuperclass;
 @Data
 @ToString(callSuper = true)
 @MappedSuperclass
-public class JpaNamedModelJpa extends JpaBaseModel {
+public class JpaNamedModel extends JpaBaseModel {
     private String name;
 }

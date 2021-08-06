@@ -1,7 +1,7 @@
 package kz.dom.domkzbackendv2.model.jpa.dict.housing;
 
 
-import kz.dom.domkzbackendv2.model.jpa.base.JpaMultiLangJpaNamedModelJpa;
+import kz.dom.domkzbackendv2.model.jpa.base.JpaMultiLangNamedModel;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
@@ -14,5 +14,5 @@ import javax.persistence.Table;
 @Table(name = "electricity_types")
 @Entity
 @BatchSize(size = 100)
-public class JpaElectricityType extends JpaMultiLangJpaNamedModelJpa {
+public class JpaElectricityType extends JpaMultiLangNamedModel {
 }
